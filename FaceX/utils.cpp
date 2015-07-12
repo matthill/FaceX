@@ -30,8 +30,9 @@ using namespace std;
 
 void Transform::Apply(vector<cv::Point2d> *x, bool need_translation) const
 {
-	for (cv::Point2d &p : *x)
+	for (unsigned int i = 0; i < x->size(); i++)
 	{
+                cv::Point2d &p = x->at(i);
 		cv::Matx21d v;
 		v(0) = p.x;
 		v(1) = p.y;
@@ -92,8 +93,9 @@ vector<cv::Point2d> MapShape(cv::Rect original_face_rect,
 	const vector<cv::Point2d> original_landmarks, cv::Rect new_face_rect)
 {
 	vector<cv::Point2d> result;
-	for (const cv::Point2d &landmark: original_landmarks)
+	for (unsigned int i = 0; i < original_landmarks.size(); i++)
 	{
+                const cv::Point2d &landmark = original_landmarks[i];
 		result.push_back(landmark);
 		result.back() -= cv::Point2d(original_face_rect.x, original_face_rect.y);
 		result.back().x *= 

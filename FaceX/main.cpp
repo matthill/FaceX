@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include <iostream>
 #include <string>
+#include <stdexcept>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -52,12 +53,14 @@ void AlignImage(const FaceX & face_x)
 	vector<cv::Rect> faces;
 	cc.detectMultiScale(gray_image, faces);
 
-	for (cv::Rect face : faces)
+	for (unsigned int i = 0; i < faces.size(); i++)
 	{
+                cv::Rect face = faces[i];
 		cv::rectangle(image, face, cv::Scalar(0, 0, 255), 2);
 		vector<cv::Point2d> landmarks = face_x.Alignment(gray_image, face);
-		for (cv::Point2d landmark : landmarks)
+		for (unsigned int j = 0; j < landmarks.size(); j++)
 		{
+                        cv::Point2d landmark = landmarks[j];
 			cv::circle(image, landmark, 1, cv::Scalar(0, 255, 0), 2);
 		}
 	}
@@ -90,8 +93,9 @@ void Tracking(const FaceX & face_x)
 			landmarks[i].y = (landmarks[i].y + original_landmarks[i].y) / 2;
 		}
 
-		for (cv::Point2d p : landmarks)
+		for (unsigned int i = 0; i < landmarks.size(); i++)
 		{
+                        cv::Point2d p = landmarks[i];
 			cv::circle(frame, p, 1, cv::Scalar(0, 255, 0), 2);
 		}
 

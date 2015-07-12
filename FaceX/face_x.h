@@ -70,7 +70,7 @@ public:
 
 private:
 	std::vector<cv::Point2d> mean_shape_;
-	std::vector<std::vector<cv::Point2d>> test_init_shapes_;
+	std::vector<std::vector<cv::Point2d> > test_init_shapes_;
 	std::vector<Regressor> stage_regressors_;
 };
 

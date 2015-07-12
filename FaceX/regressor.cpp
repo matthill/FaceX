@@ -72,7 +72,7 @@ void Regressor::read(const cv::FileNode &fn)
 	pixels_.clear();
 	ferns_.clear();
 	cv::FileNode pixels_node = fn["pixels"];
-	for (auto it = pixels_node.begin(); it != pixels_node.end(); ++it)
+	for (cv::FileNodeIterator it = pixels_node.begin(); it != pixels_node.end(); ++it)
 	{
 		pair<int, cv::Point2d> pixel;
 		(*it)["first"] >> pixel.first;
@@ -80,7 +80,7 @@ void Regressor::read(const cv::FileNode &fn)
 		pixels_.push_back(pixel);
 	}
 	cv::FileNode ferns_node = fn["ferns"];
-	for (auto it = ferns_node.begin(); it != ferns_node.end(); ++it)
+	for (cv::FileNodeIterator it = ferns_node.begin(); it != ferns_node.end(); ++it)
 	{
 		Fern f;
 		*it >> f;

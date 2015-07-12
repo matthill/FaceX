@@ -37,9 +37,9 @@ struct Fern
 	void read(const cv::FileNode &fn);
 
 	std::vector<double> thresholds;
-	std::vector<std::pair<int, int>> features_index;
-	std::vector<std::vector<cv::Point2d>> outputs;
-	std::vector<std::vector<std::pair<int, double>>> outputs_mini;
+	std::vector<std::pair<int, int> > features_index;
+	std::vector<std::vector<cv::Point2d> > outputs;
+	std::vector<std::vector<std::pair<int, double> > > outputs_mini;
 };
 
 void read(const cv::FileNode& node, Fern& f, const Fern&);

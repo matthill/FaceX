@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include<cstdlib>
 #include<memory>
 #include<algorithm>
+#include <stdexcept>
 
 #include "utils.h"
 
@@ -44,7 +45,7 @@ void Fern::ApplyMini(cv::Mat features, std::vector<double> &coeffs)const
 		outputs_index |= (p1 - p2 > thresholds[i]) << i;
 	}
 
-	const vector<pair<int, double>> &output = outputs_mini[outputs_index];
+	const vector<pair<int, double> > &output = outputs_mini[outputs_index];
 	for (int i = 0; i < output.size(); ++i)
 		coeffs[output[i].first] += output[i].second;
 }
@@ -56,7 +57,7 @@ void Fern::read(const cv::FileNode &fn)
 	outputs_mini.clear();
 	fn["thresholds"] >> thresholds;
 	cv::FileNode features_index_node = fn["features_index"];
-	for (auto it = features_index_node.begin(); it != features_index_node.end(); ++it)
+	for (cv::FileNodeIterator it = features_index_node.begin(); it != features_index_node.end(); ++it)
 	{
 		pair<int, int> feature_index;
 		(*it)["first"] >> feature_index.first;
@@ -64,11 +65,11 @@ void Fern::read(const cv::FileNode &fn)
 		features_index.push_back(feature_index);
 	}
 	cv::FileNode outputs_mini_node = fn["outputs_mini"];
-	for (auto it = outputs_mini_node.begin(); it != outputs_mini_node.end(); ++it)
+	for (cv::FileNodeIterator it = outputs_mini_node.begin(); it != outputs_mini_node.end(); ++it)
 	{
-		vector<std::pair<int, double>> output;
+		vector<std::pair<int, double> > output;
 		cv::FileNode output_node = *it;
-		for (auto it2 = output_node.begin(); it2 != output_node.end(); ++it2)
+		for (cv::FileNodeIterator it2 = output_node.begin(); it2 != output_node.end(); ++it2)
 			output.push_back(make_pair((*it2)["index"], (*it2)["coeff"]));
 		outputs_mini.push_back(output);
 	}

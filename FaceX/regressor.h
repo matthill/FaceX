@@ -44,7 +44,7 @@ public:
 
 private:
 
-	std::vector<std::pair<int, cv::Point2d>> pixels_;
+	std::vector<std::pair<int, cv::Point2d> > pixels_;
 	std::vector<Fern> ferns_;
 	cv::Mat base_;
 };

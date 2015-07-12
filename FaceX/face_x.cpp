@@ -40,14 +40,14 @@ FaceX::FaceX(const string & filename)
 
 	model_file["mean_shape"] >> mean_shape_;
 	cv::FileNode fn = model_file["test_init_shapes"];
-	for (auto it = fn.begin(); it != fn.end(); ++it)
+	for (cv::FileNodeIterator it = fn.begin(); it != fn.end(); ++it)
 	{
 		vector<cv::Point2d> shape;
 		*it >> shape;
 		test_init_shapes_.push_back(shape);
 	}
 	fn = model_file["stage_regressors"];
-	for (auto it = fn.begin(); it != fn.end(); ++it)
+	for (cv::FileNodeIterator it = fn.begin(); it != fn.end(); ++it)
 	{
 		Regressor r;
 		*it >> r;
@@ -57,7 +57,7 @@ FaceX::FaceX(const string & filename)
 
 vector<cv::Point2d> FaceX::Alignment(cv::Mat image, cv::Rect face_rect) const
 {
-	vector<vector<double>> all_results(test_init_shapes_[0].size() * 2);
+	vector<vector<double> > all_results(test_init_shapes_[0].size() * 2);
 	for (int i = 0; i < test_init_shapes_.size(); ++i)
 	{
 		vector<cv::Point2d> init_shape = MapShape(cv::Rect(0, 0, 1, 1),
@@ -96,7 +96,7 @@ vector<cv::Point2d> FaceX::Alignment(cv::Mat image, cv::Rect face_rect) const
 vector<cv::Point2d> FaceX::Alignment(cv::Mat image,
 	vector<cv::Point2d> initial_landmarks) const
 {
-	vector<vector<double>> all_results(test_init_shapes_[0].size() * 2);
+	vector<vector<double> > all_results(test_init_shapes_[0].size() * 2);
 	for (int i = 0; i < test_init_shapes_.size(); ++i)
 	{
 		Transform t = Procrustes(initial_landmarks, test_init_shapes_[i]);
