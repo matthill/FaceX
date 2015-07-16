@@ -25,6 +25,7 @@ THE SOFTWARE.
 #include <iostream>
 #include <string>
 #include <stdexcept>
+#include "facewrapper.h"
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -115,12 +116,16 @@ void Tracking(const FaceX & face_x)
 	}
 }
 
+
 int main()
 {
 	try
 	{
-		FaceX face_x(kModelFileName);
+		
+                FaceX face_x(kModelFileName);
 
+                facewrapper* wrapper = new facewrapper();
+                
 		cout << "Choice: " << endl;
 		cout << "1. Align " << kTestImage << " in the current working directory." << endl;
 		cout << "2. Align video from web camera." << endl;
